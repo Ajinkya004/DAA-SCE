@@ -277,7 +277,16 @@ int main()
             }
             
         }
-        cout<<"It's a draw!!!"<<endl;
+        if(getWinner()==1){
+            cout<<"You Win !!!!"<<endl;
+        }
+        else if(getWinner()==-1){
+            cout<<"Computer Wins"<<endl;
+        }
+        else{
+            cout<<"It's a draw!!!"<<endl;
+        }
+        
     }
     else
     {
@@ -315,7 +324,15 @@ int main()
             }
             
         }
-        cout<<"It's a draw!!!"<<endl;
+      if(getWinner()==1){
+            cout<<"You Win !!!!"<<endl;
+        }
+        else if(getWinner()==-1){
+            cout<<"Computer Wins"<<endl;
+        }
+        else{
+            cout<<"It's a draw!!!"<<endl;
+        }
     }
     return 0;
 }
