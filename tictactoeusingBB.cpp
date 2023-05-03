@@ -3,25 +3,14 @@
 #include<queue> 
 #include<utility>
 #include<map>
-const int WIN_SCORE = 100;
-const int LOSS_SCORE = -100;
-const int DRAW_SCORE = 0;
+
 const int BLOCK_SCORE = 50;
 const int WIN_SCORE = 20;
 const int CENTER_SCORE = 10;
 const int CORNER_SCORE = 5;
 const int EDGE_SCORE = 3;
 int PLACES_OCCUPIED=0;
-map<pair<int,int>,int> mp;
-/*mp[{0,0}]=5;
-mp[{0,2}]=5;
-mp[{2,0}]=5;
-mp[{2,2}]=5;
-mp[{1,1}]=10;
-mp[{0,1}]=3;
-mp[{1,0}]=3;
-mp[{1,2}]=3;
-mp[{2,1}]=3; */
+
 using namespace std;
 // an global array which is our board 
 vector<vector<char>> board(3,vector<char>(3,'E'));
@@ -43,7 +32,7 @@ int getWinner()
 {
     // check rows for winner 
     for(int i=0;i<board.size();i++){
-        if(board[i][0]!='E' and board[i][0]==board[i][1] and board[i][1]==board[i][2] and board[i][0]==board[i][2]){
+        if(board[i][0]!='E' and board[i][0]==board[i][1] and board[i][1]==board[i][2]){
             return  (board[i][0] == 'X' ? 1 : -1);
         }
     }
@@ -56,7 +45,7 @@ int getWinner()
     // check diagonal for winner 
       if (board[0][0] != 'E' && board[0][0] == board[1][1] && board[1][1] == board[2][2])
         return (board[0][0] == 'X' ? 1 : -1);
-    if (board[0][2] != ' ' && board[0][2] == board[1][1] && board[1][1] == board[2][0])
+    if (board[0][2] != 'E' && board[0][2] == board[1][1] && board[1][1] == board[2][0])
         return (board[0][2] == 'X' ? 1 : -1);
     // if non of the condtion above is true than we return zero which tells us that there is a draw
    if(isFull){
@@ -168,7 +157,10 @@ bool isFarThreat()
 }
 int getCostforPlace(int i,int j){
    int Cost=0;
-   if(isFarThreat()){
+   if(i==1 and j==1 and board[i][j]=='E'){
+      Cost+=CENTER_SCORE+20;
+   }
+   else if(isFarThreat()){
     Cost+=BLOCK_SCORE+20;
    }
   else if(needToBlock(i,j)){
@@ -177,23 +169,32 @@ int getCostforPlace(int i,int j){
  else if(isWin(i,j)){
     Cost+=WIN_SCORE;
  }
- 
-
+ else if(board[1][1]=='E'){
+    Cost+=CENTER_SCORE;
+ }
+    return Cost;
 }
-void placeMarkbyCode(){
+void placeMarkbyCode()
+{
        PLACES_OCCUPIED++;
        for(int i=0;i<board.size();i++){
             for(int j=0;j<board[0].size();j++){
+                if(board[i][j]=='E'){
                 int cost=getCostforPlace(i,j);
                 auto p=make_pair(i,j);
                 auto q=make_pair(cost,p);
                 pq.push(q);
+                }
+                else{
+                    continue;
+                }
             }
        }
        pair<int,pair<int,int>> t=pq.top();
        int r=t.second.first;
        int c=t.second.second;
        board[r][c]='O';
+       cout<<endl;
        while(!pq.empty()){
         pq.pop();
        }
@@ -205,6 +206,7 @@ void placeMarkbyPlayer(){
     r--,c--;
     if(board[r][c]=='E'){
         board[r][c]='X';
+        cout<<endl;
         PLACES_OCCUPIED++;
     }
     else{
@@ -214,34 +216,40 @@ void placeMarkbyPlayer(){
 }
 int main()
 {
-    board={{'X','E','E'},
-          {'E','O','E'},
-          {'E','E','X'} };
-    //  int winner=getWinner();
-    //  if(winner==1){
-    //     cout<<"X Wins"<<endl;
-    //  }
-    //  else if(winner==-1){
-    //     cout<<"O wins"<<endl;
-    //  }
-    // else{
-    //     cout<<"Draw"<<endl;
-    // }
-  while(getWinner()==3){
-    while(!isFull()){
+    board={{'E','E','E'},
+          {'E','E','E'},
+          {'E','E','E'} };
+   
+    while(!isFull())
+    {
         placeMarkbyCode();
         printBoard();
-        placeMarkbyPlayer();
-        printBoard();
-        if(getWinner()!=3)
-        {
+        if(isFull()){
             break;
         }
+        if(getWinner()==1 or getWinner()==-1)
+        {
+            cout<<"Player wins"<<endl;
+            return 0;
+        }
+        placeMarkbyPlayer();
+        printBoard();
+        if(isFull()){
+            break;
+        }
+        if(getWinner()==1)
+        {
+            cout<<"Player wins"<<endl;
+            return 0;
+        }
+        if(getWinner()==-1)
+        {
+            cout<<"Computer wins"<<endl;
+            return 0;
+        }
+        
     }
-   
-
-
-  }
-
+    cout<<"It's a draw"<<endl;
+  
     return 0;
 }
