@@ -252,7 +252,7 @@ int main()
             }
             if(getWinner()==1)
             {
-                cout<<"Player wins!!!"<<endl;
+                cout<<"You win!!!"<<endl;
                 return 0;
             }
             if(getWinner()==-1)
@@ -267,7 +267,7 @@ int main()
             }
             if(getWinner()==1)
             {
-                cout<<"Player wins!!!"<<endl;
+                cout<<"You win!!!"<<endl;
                 return 0;
             }
             if(getWinner()==-1)
@@ -278,7 +278,7 @@ int main()
             
         }
         if(getWinner()==1){
-            cout<<"You Win !!!!"<<endl;
+            cout<<"You Win!!!!"<<endl;
         }
         else if(getWinner()==-1){
             cout<<"Computer Wins"<<endl;
@@ -299,7 +299,7 @@ int main()
             }
             if(getWinner()==1)
             {
-                cout<<"Player wins!!!"<<endl;
+                cout<<"You win!!!"<<endl;
                 return 0;
             }
             if(getWinner()==-1)
@@ -314,7 +314,7 @@ int main()
             }
             if(getWinner()==1)
             {
-                cout<<"Player wins!!!"<<endl;
+                cout<<"You win!!!"<<endl;
                 return 0;
             }
             if(getWinner()==-1)
