@@ -4,8 +4,8 @@
 #include<utility>
 
 
-const int BLOCK_SCORE = 50;
-const int WIN_SCORE = 20;
+const int BLOCK_SCORE = 20;
+const int WIN_SCORE = 30;
 const int CENTER_SCORE = 10;
 const int CORNER_SCORE = 5;
 const int EDGE_SCORE = 3;
@@ -43,7 +43,7 @@ int getWinner()
         }
     }
     // check diagonal for winner 
-      if (board[0][0] != ' ' && board[0][0] == board[1][1] && board[1][1] == board[2][2])
+    if (board[0][0] != ' ' && board[0][0] == board[1][1] && board[1][1] == board[2][2])
         return (board[0][0] == 'X' ? 1 : -1);
     if (board[0][2] != ' ' && board[0][2] == board[1][1] && board[1][1] == board[2][0])
         return (board[0][2] == 'X' ? 1 : -1);
@@ -265,12 +265,12 @@ int main()
             if(isFull()){
                 break;
             }
-            if(getWinner()==1)
+            if(getWinner()==-1)
             {
                 cout<<"You win!!!"<<endl;
                 return 0;
             }
-            if(getWinner()==-1)
+            if(getWinner()==1)
             {
                 cout<<"Computer wins!!!"<<endl;
                 return 0;
